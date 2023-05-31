@@ -1,27 +1,25 @@
 import MovieCard from "@/components/MovieCard";
+import { Movie } from "@/interface/global.interface";
+import { setGlobalMovies } from "@/slice/MovieSlice";
 import axios from "axios";
 import { useState, useEffect } from "react";
-interface MovieInterface {
-  id: number;
-  title: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-}
+import {useDispatch,useSelector} from 'react-redux'
+
 export default function Home() {
-  const [movies, setmovies] = useState<MovieInterface[]>([]);
+  const movies=useSelector((state:any)=>(state.MovieReducer.movies))
+  const dispatch=useDispatch()
   const fetchMovies = async () => {
     try {
       const response = await axios.get(
         "https://api.themoviedb.org/3/movie/popular?api_key=5345d591dce999dd3dde52a8fd7e0f56"
       );
-      setmovies(response.data.results);
+      dispatch(setGlobalMovies(response.data.results))
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     fetchMovies();
   },[]);
 
