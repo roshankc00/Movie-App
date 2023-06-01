@@ -21,5 +21,6 @@ const MovieCard = ({title,poster,releaseYear,rating}:MovieCardInterface) => {
   )
 }
 
+// thesee are the best way to be the 
 
 export default MovieCard
